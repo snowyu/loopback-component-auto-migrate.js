@@ -1,7 +1,7 @@
 {
   "name": "loopback-component-auto-migrate",
   "description": "migrate the database and import datas automatcally for the loopback application.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "Riceball LEE",
     "email": "snowyu.lee@gmail.com",
@@ -43,9 +43,11 @@
     "*.coffee",
     "test",
     "src",
+    "bin",
     "lib"
   ],
   "main": "./index",
+  "bin": {"slc-migrate": "./bin/migrate.js"},
   "scripts": {
     "test": "grunt test",
     "test-cov": "mocha --reporter dot && istanbul report text-summary lcovonly"

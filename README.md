@@ -39,6 +39,8 @@ This loopback component enables you to migrate the database and import datas aut
 
 Just enable it on `component-config.json`.
 
+or run `node_modules/.bin/slc-migrate` directly.
+
 set `DEBUG=loopback:component:autoMigrate:*` env vaiable to show debug info.
 
 Manually use it:
