@@ -17,8 +17,8 @@ This loopback component enables you to migrate the database and import datas aut
   {
     "loopback-component-auto-migrate": {
       "enabled": true,
-      "migration": "auto-migrate-data"
-      "models": ['Role']
+      "migration": "auto-migrate-data",
+      "models": ['Role'],
       "fixtures": './test/fixtures/'
     }
   }

@@ -9,7 +9,8 @@ module.exports = (app, options) ->
     throw new Error('loopback-component-auto-migrate requires loopback 2.0 or newer')
 
   if !options or options.enabled isnt false
-    autoMigrate = require (options and options.migration) || 'auto-update'
+    autoMigrate = (options and options.migration) or 'auto-update'
+    autoMigrate = require './' + autoMigrate
     autoMigrate(app, options)
   else
     Promise.reject(new TypeError 'component not enabled')
