@@ -47,12 +47,15 @@
     "lib"
   ],
   "main": "./index",
-  "bin": {"slc-migrate": "./bin/migrate.js"},
+  "bin": {
+    "slc-migrate": "./bin/migrate.js"
+  },
   "scripts": {
     "test": "grunt test",
     "test-cov": "mocha --reporter dot && istanbul report text-summary lcovonly"
   },
   "dependencies": {
+    "app-root-path": "^1.2.1",
     "bluebird": "^3.4.0",
     "cson": "^3.0.2",
     "debug": "^2.2.0",

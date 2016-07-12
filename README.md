@@ -30,7 +30,7 @@ This loopback component enables you to migrate the database and import datas aut
     * "auto-update" *defaults*: update the tables of the databse.
     * "auto-update-data": update the tables, load datas from `fixtures` folder.
     * "auto-load-data": load datas from `fixtures` folder.
-  - `models` *[String]*: the models to process. *defaults to the all models in the model-config.json*
+  - `models` *[array of String]*: the models to process. *defaults to the all models in the model-config.json*
   - `fixtures` *[String]*: the datas folder to import.
 
 
@@ -48,7 +48,7 @@ Manually use it:
 ```js
 
 autoMigrate = require('loopback-component-auto-migrate/lib/auto-migrate');
-autoMigrate(app, {fixtrues: dataFolder}).then()
+autoMigrate(app, {models:['Role'], fixtrues: 'yourDataFolder'}).then()
 
 ```
 

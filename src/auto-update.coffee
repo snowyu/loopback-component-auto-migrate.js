@@ -3,7 +3,8 @@ path          = require 'path'
 isFunction    = require 'util-ex/lib/is/type/function'
 isUndefined   = require 'util-ex/lib/is/type/undefined'
 debug         = require('debug')('loopback:component:autoMigrate:autoUpdate')
-models        = require '../../../server/model-config.json'
+appRoot       = require 'app-root-path'
+models        = require appRoot + '/server/model-config.json'
 modelNames    = require './model-names'
 
 isSyncModel = (ds, model)->
