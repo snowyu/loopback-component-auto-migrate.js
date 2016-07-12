@@ -1,18 +1,19 @@
 #!/bin/env node
 var path        = require('path');
 var Promise     = require('bluebird');
+var appRoot     = require('app-root-path');
 
-var app = require('../../../server/server');
+var app = require(appRoot + '/server/server');
 var autoMigrateData = require('../lib/auto-migrate-data');
 var autoUpdateData  = require('../lib/auto-update-data');
 var autoLoadData    = require('../lib/auto-load-data');
 var createDefaults;
 try {
-  createDefaults  = require('../../../server/common/create-defaults');
+  createDefaults  = require(appRoot + '/server/common/create-defaults');
 } catch(err) {
   createDefaults  = Promise.resolve();
 }
-var defaultFolder   = path.resolve(__dirname, '../../../server/data');
+var defaultFolder   = path.resolve(appRoot, './server/data');
 
 function migrate(aDataFolder, forceCreate) {
   if (forceCreate === undefined) forceCreate = true;
