@@ -1,7 +1,7 @@
-Promise     = require('bluebird')
-
-autoupdate = require('./auto-update')
-loadDataFrom= require('./load-data-from')
+Promise       = require 'bluebird'
+autoupdate    = require './auto-update'
+loadDataFrom  = require './load-data-from'
+modelNames    = require './model-names'
 
 # update database and import data(if aDataFolder exists)
 module.exports = (aApp, aOptions) ->
@@ -9,7 +9,8 @@ module.exports = (aApp, aOptions) ->
   result = autoupdate(aApp)
   if aDataFolder
     result = result.then (models)->
-      models = Promise.map models, (model, index)->
+      vModelNames = (aOptions and aOptions.models) || modelNames
+      models = Promise.map vModelNames, (model, index)->
         loadDataFrom(aApp, model, aDataFolder)
       models
   result
