@@ -9,9 +9,16 @@ modelNames    = require './model-names'
 
 isSyncModel = (ds, model)->
   new Promise (resolve, reject)->
-    ds.isActual model, (err, actual)->
-      #True when data source and database is in sync
-      if err then reject(err) else resolve(actual)
+    ds.setMaxListeners(0)
+    if ds.connected
+      ds.isActual model, (err, actual)->
+        #True when data source and database is in sync
+        if err then reject(err) else resolve(actual)
+    else
+      ds.once 'connected', ->
+        ds.isActual model, (err, actual)->
+          #True when data source and database is in sync
+          if err then reject(err) else resolve(actual)
 
 # drop all tables and create all tables from models.
 module.exports = (app, options)->

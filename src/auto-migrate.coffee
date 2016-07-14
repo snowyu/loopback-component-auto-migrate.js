@@ -13,8 +13,13 @@ module.exports = (app, options)->
   vModelNames = (options and options.models) || modelNames
   Promise.map vModelNames, (model)->
     ds = app.dataSources[models[model].dataSource]
-    result = ds.automigrate model
-    result
+    ds.setMaxListeners(0)
+    if ds.connected
+      result = ds.automigrate model
+    else
+      new Promise (resolve, reject)->
+        ds.once 'connected', ->
+          resolve ds.automigrate model
   .each (item, index)->
     item = vModelNames[index] unless item
     debug 'Model ' + item + ' automigrated'
