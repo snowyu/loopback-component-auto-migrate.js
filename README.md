@@ -58,3 +58,10 @@ autoMigrate(app, {models:['Role'], fixtrues: 'yourDataFolder'}).then()
 ```
 
 
+## History
+
+### v0.2.0
+
++ hasMany relation data supports.
+
+

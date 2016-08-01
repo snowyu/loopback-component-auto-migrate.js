@@ -19,9 +19,22 @@ module.exports = (Model, data, done) ->
 
   Promise.map data, (item)->
     Model.upsert item
-  .each (item, index)->
-    debug '%s: %o', Model.modelName, item
-    return item
+    .then (result)->
+      if result
+        delayed = []
+        for k,v of item
+          # try to determine the hasMany relation
+          vRelation = result[k]
+          if isFunction(vRelation) and isFunction(vRelation.create) and isArray(v)
+            ((aRelation, aData)->
+              delayed.push Promise.map aData, (data)->
+                aRelation.create data
+            )(vRelation, v)
+        result = Promise.all(delayed) if delayed.length
+      result
+  .each (result, index)->
+    debug '%s: %o', Model.modelName, result
+    return result
   .then (results)->
     debug Model.modelName + ': total ' + results.length + ' data created.'
     return results
