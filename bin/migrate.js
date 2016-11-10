@@ -42,7 +42,7 @@ function migrate(aDataFolder, forceCreate) {
 
 module.exports = migrate;
 
-if (require.main) {
+function main() {
   var parseArgs = require('minimist');
   var info;
   var opts = {
@@ -53,6 +53,7 @@ if (require.main) {
   var argv = parseArgs(process.argv.slice(2), opts);
   var folder = argv._.pop();
   var result;
+  app.set('migrating', true)
   if (argv.import) {
     if (!folder) folder = defaultFolder;
     console.log('import data only:', folder);
@@ -96,4 +97,8 @@ if (require.main) {
   //   if (args.options.update !== undefined) args.options.update = !args.options.update;
   //   migrate(folder, args.options.update);
   // }
+}
+
+if (require.main) {
+  app.on('booted', main);
 }
