@@ -18,7 +18,7 @@ module.exports = (Model, data, done) ->
   return reject(new TypeError 'Missing Model') unless Model
 
   Promise.map data, (item)->
-    Model.upsert item
+    Model.create item
     .then (result)->
       if result
         delayed = []
