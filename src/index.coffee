@@ -13,4 +13,4 @@ module.exports = (app, options) ->
     autoMigrate = require './' + autoMigrate
     autoMigrate(app, options)
   else
-    Promise.reject(new TypeError 'component not enabled')
+    debug 'component not enabled'
