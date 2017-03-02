@@ -1,5 +1,5 @@
 'use strict'
-debug = require('debug')('loopback:component:autoMigrate')
+debug = require('debug')('loopback:component:autoMigrate:main')
 
 module.exports = (app, options) ->
   debug 'initializing component'
@@ -11,6 +11,6 @@ module.exports = (app, options) ->
   if !options or options.enabled isnt false
     autoMigrate = (options and options.migration) or 'auto-update'
     autoMigrate = require './' + autoMigrate
-    autoMigrate(app, options)
+    app.autoMigrateDone = autoMigrate(app, options).then -> debug "Done"
   else
     debug 'component not enabled'
