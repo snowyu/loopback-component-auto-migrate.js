@@ -33,12 +33,9 @@ module.exports = (Model, data, done) ->
         result = Promise.all(delayed) if delayed.length
       result
   .each (result, index)->
-    debug '%s: %o', Model.modelName, result
+    debug '%s: %O', Model.modelName, result
     return result
   .then (results)->
     debug Model.modelName + ': total ' + results.length + ' data created.'
     return results
-  .catch (err)->
-    debug err.message
-    throw err
   .asCallback done

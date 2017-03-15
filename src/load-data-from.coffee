@@ -15,7 +15,7 @@ loadConfig  = loadConfig.load
 # load data to Model from a folder
 module.exports = (app, Model, folder, done) ->
   Model = app.models[Model] if isString Model
-  return done(new TypeError 'Missing Model') unless Model
+  return Promise.reject(new TypeError 'Missing Model') unless Model
 
   vName = './' + inflection.transform Model.modelName, ['underscore', 'dasherize']
   loadConfig path.resolve folder, vName

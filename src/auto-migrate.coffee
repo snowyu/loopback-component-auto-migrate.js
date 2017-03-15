@@ -27,7 +27,4 @@ module.exports = (app, options)->
   .then (results)->
     debug 'total '+results.length+ ' models migrated.'
     return vModels
-  .error (err)->
-    debug 'Model automigrated failed:', err
-    return
 

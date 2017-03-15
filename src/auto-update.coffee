@@ -37,7 +37,4 @@ module.exports = (app, options)->
   .then (results)->
     debug 'total '+results.length+ ' models updated.'
     return vModels
-  .error (err)->
-    debug 'Model autoupdate failed:', err
-    return
 
