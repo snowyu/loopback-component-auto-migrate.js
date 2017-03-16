@@ -13,7 +13,7 @@ module.exports = (app, options) ->
     autoMigrate = require './' + migration
     raiseError = (options and options.migration)
     app.set('loopback-component-auto-migrate-status', 'loaded')
-    app.set('loopback-component-auto-migrate', autoMigrate)
+
     autoMigrateDone = autoMigrate(app, options)
       .asCallback (err)->
         if err
