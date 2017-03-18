@@ -13,15 +13,19 @@ module.exports = (app, options) ->
     autoMigrate = require './' + migration
     raiseError = (options and options.migration)
     app.set('loopback-component-auto-migrate-status', 'loaded')
-    app.set('loopback-component-auto-migrate', autoMigrate)
-    autoMigrate(app, options)
-    .asCallback (err)->
-      if err
-        app.set('loopback-component-auto-migrate-error', err)
-        app.set('loopback-component-auto-migrate-status', 'failed')
-        debug migration + ' failed: %O', err
-        throw err if raiseError
-      else
-        app.set('loopback-component-auto-migrate-status', 'done')
+
+    autoMigrateDone = autoMigrate(app, options)
+      .asCallback (err)->
+        if err
+          app.set('loopback-component-auto-migrate-error', err)
+          app.set('loopback-component-auto-migrate-status', 'failed')
+          debug migration + ' failed: %O', err
+          throw err if raiseError
+        else
+          app.set('loopback-component-auto-migrate-status', 'done')
+
+    app.set('loopback-component-auto-migrate-done', autoMigrateDone) # set the `done` promise of the `autoMigrate()` call
+
+    return autoMigrateDone
   else
     debug 'component not enabled'

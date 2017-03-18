@@ -51,12 +51,13 @@ or run `node_modules/.bin/slc-migrate` directly.
 
 set `DEBUG=loopback:component:autoMigrate:*` env variable to show debug info.
 
-When it runs through `component-config.json`, it is attaching the `autoMigrate` promise at `app.get('loopback-component-auto-migrate')` that you can use to know when all migrations, data importing etc have finished. Also the `loopback-component-auto-migrate-status` will be set.
+When it runs through `component-config.json`, it is attaching the `autoMigrate` promise at `app.get('loopback-component-auto-migrate-done')` that you can use to know when all migrations, data importing etc have finished. 
 
-* loaded: autoMigrate loaded.
-* failed: autoMigrate failed.
-* done: autoMigrate successful.
+Also the `loopback-component-auto-migrate-status` will be set for convenience:
 
+  * 'loaded': autoMigrate loaded.
+  * 'failed': autoMigrate failed.
+  * 'done': autoMigrate successful.
 
 #### Manually use it:
 
@@ -68,6 +69,10 @@ autoMigrate(app, {models:['Role'], fixtures: 'yourDataFolder'}).then()
 ```
 
 ## History
+
+### v0.2.3
+
++ attaching done Promise at the app. 
 
 ### v0.2.0
 
