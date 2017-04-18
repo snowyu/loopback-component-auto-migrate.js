@@ -5,6 +5,7 @@ isArray     = require 'util-ex/lib/is/type/array'
 isString    = require 'util-ex/lib/is/type/string'
 debug       = require('debug')('loopback:component:autoMigrate:loadData')
 loopback    = require 'loopback'
+path        = require 'path'
 
 # import data to database from /server/data/ folder
 # need promise to done.
@@ -13,9 +14,10 @@ module.exports = (Model, data, done) ->
     Promise.reject err
     .asCallback done
 
-  return reject(new TypeError 'The data should be an array.') unless isArray data
+  vFile = path.basename(data.$cfgPath)
+  return reject(new TypeError '%s: The data should be an array.', vFile) unless isArray data
   Model = loopback.getModel(Model) if isString Model
-  return reject(new TypeError 'Missing Model') unless Model
+  return reject(new TypeError '%s: Missing Model', vFile) unless Model
 
   Promise.map data, (item)->
     Model.create item
@@ -38,4 +40,7 @@ module.exports = (Model, data, done) ->
   .then (results)->
     debug Model.modelName + ': total ' + results.length + ' data created.'
     return results
+  .catch (err)->
+    err.name = vFile + ':' + err.name
+    throw err
   .asCallback done
