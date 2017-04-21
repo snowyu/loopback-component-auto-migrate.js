@@ -5,7 +5,7 @@ loadDataFrom= require './load-data-from'
 
 # Migrate database and import data(if aDataFolder exists)
 module.exports = (aApp, aOptions) ->
-  result = automigrate(aApp)
+  result = automigrate(aApp, aOptions)
   aDataFolder = aOptions and aOptions.fixtures
   if aDataFolder
     result = result.then (models)->
