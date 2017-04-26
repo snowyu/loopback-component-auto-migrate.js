@@ -1,7 +1,7 @@
 {
   "name": "loopback-component-auto-migrate",
   "description": "migrate the database and import datas automatcally for the loopback application.",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "author": {
     "name": "Riceball LEE",
     "email": "snowyu.lee@gmail.com",
