@@ -14,7 +14,7 @@ module.exports = (Model, data, done) ->
     Promise.reject err
     .asCallback done
 
-  vFile = path.basename(data.$cfgPath)
+  vFile = if data.$cfgPath then path.basename(data.$cfgPath) else 'DATA'
   return reject(new TypeError '%s: The data should be an array.', vFile) unless isArray data
   Model = loopback.getModel(Model) if isString Model
   return reject(new TypeError '%s: Missing Model', vFile) unless Model
