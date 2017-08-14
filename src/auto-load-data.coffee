@@ -11,6 +11,7 @@ module.exports = (aApp, aOptions) ->
   return Promise.reject new TypeError 'Missing data folder' unless aDataFolder
   vModels = (aOptions and aOptions.models) || modelNames
   vModels = vModels.map (model)->aApp.models[model]
+  raiseError = aOptions?.raiseError
   vModels = Promise.map vModels, (model, index)->
-    loadDataFrom(aApp, model, aDataFolder)
+    loadDataFrom(aApp, model, aDataFolder, raiseError)
 

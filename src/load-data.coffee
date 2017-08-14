@@ -9,7 +9,7 @@ path        = require 'path'
 
 # import data to database from /server/data/ folder
 # need promise to done.
-module.exports = (Model, data, done) ->
+module.exports = (Model, data, raiseError, done) ->
   reject = (err)->
     Promise.reject err
     .asCallback done
@@ -31,9 +31,15 @@ module.exports = (Model, data, done) ->
             ((aRelation, aData)->
               delayed.push Promise.map aData, (data)->
                 aRelation.create data
+                .catch (err)->
+                  throw err if raiseError
+                  debug '(IGNORE) Relation %s(%s) %O', Model.modelName, k, err
             )(vRelation, v)
         result = Promise.all(delayed) if delayed.length
       result
+    .catch (err)->
+      throw err if raiseError
+      debug '(IGNORE) %s %O', Model.modelName, err
   .each (result, index)->
     debug '%s: %O', Model.modelName, result
     return result

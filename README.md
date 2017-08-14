@@ -26,6 +26,7 @@ This loopback component enables you to migrate the database and import datas aut
   ```
   - `enabled` *[Boolean]*: whether enable this component. *defaults: true*
   - `raiseError` *[Boolean]*: whether raise error. *defaults: false*
+    * it wont stop to import data if not raise error.
   - `migration` *[String]* : the migration ways:
     * "auto-migrate": drop and recreate the tables of the database.
     * "auto-migrate-data": drop and recreate the tables, load datas from `fixtures` folder.
@@ -51,7 +52,7 @@ or run `node_modules/.bin/slc-migrate` directly.
 
 set `DEBUG=loopback:component:autoMigrate:*` env variable to show debug info.
 
-When it runs through `component-config.json`, it is attaching the `autoMigrate` promise at `app.get('loopback-component-auto-migrate-done')` that you can use to know when all migrations, data importing etc have finished. 
+When it runs through `component-config.json`, it is attaching the `autoMigrate` promise at `app.get('loopback-component-auto-migrate-done')` that you can use to know when all migrations, data importing etc have finished.
 
 Also the `loopback-component-auto-migrate-status` will be set for convenience:
 
@@ -72,7 +73,7 @@ autoMigrate(app, {models:['Role'], fixtures: 'yourDataFolder'}).then()
 
 ### v0.2.3
 
-+ attaching done Promise at the app. 
++ attaching done Promise at the app.
 
 ### v0.2.0
 
