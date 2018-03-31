@@ -34,6 +34,7 @@ This loopback component enables you to migrate the database and import datas aut
     * "auto-update-data": update the tables, load datas from `fixtures` folder.
     * "auto-load-data": load datas from `fixtures` folder.
   - `models` *[array of String]*: the models to process. *defaults to the all models in the model-config.json*
+    * a JSON file location can be used instead of passing all list inside *component-config.json*: `"./test/models/model-list.json"`
   - `fixtures` *[String]*: the datas folder to import.
     * the file base name is the lowercase model name with dash seperated if any.
     * the file extension name is the data file format, the following format is supported:
