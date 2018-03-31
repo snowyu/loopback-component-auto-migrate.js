@@ -1,11 +1,14 @@
-Promise       = require "bluebird"
-path          = require 'path'
-isFunction    = require 'util-ex/lib/is/type/function'
-isUndefined   = require 'util-ex/lib/is/type/undefined'
-debug         = require('debug')('loopback:component:autoMigrate:autoUpdate')
-appRoot       = require 'app-root-path'
-models        = require appRoot + '/server/model-config.json'
-modelNames    = require './model-names'
+Promise        = require "bluebird"
+path           = require 'path'
+isFunction     = require 'util-ex/lib/is/type/function'
+isUndefined    = require 'util-ex/lib/is/type/undefined'
+isString       = require 'util-ex/lib/is/type/string'
+debug          = require('debug')('loopback:component:autoMigrate:autoUpdate')
+appRoot        = require 'app-root-path'
+models         = require appRoot + '/server/model-config.json'
+modelNames     = require './model-names'
+loadModelsFrom = require './load-models-from'
+
 
 isSyncModel = (ds, model)->
   new Promise (resolve, reject)->
@@ -24,6 +27,8 @@ isSyncModel = (ds, model)->
 module.exports = (app, options)->
   vModels = []
   vModelNames = (options and options.models) || modelNames
+  # if models are coming from a JSON file, load the file and insert into vModelNames array
+  vModelNames = loadModelsFrom(app, vModelNames) if isString vModelNames
   Promise.filter vModelNames, (model, index)->
     ds = app.dataSources[models[model].dataSource]
     isSyncModel(ds, model).then (actual)-> !actual
