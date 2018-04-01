@@ -1,6 +1,10 @@
 'use strict'
 debug = require('debug')('loopback:component:autoMigrate:main')
 
+isString       = require 'util-ex/lib/is/type/string'
+modelNames     = require './model-names'
+loadModelsFrom = require './load-models-from'
+
 module.exports = (app, options) ->
   debug 'initializing component'
   loopback = app.loopback
@@ -14,7 +18,11 @@ module.exports = (app, options) ->
     raiseError = (options and options.migration)
     app.set('loopback-component-auto-migrate-status', 'loaded')
 
-    autoMigrateDone = autoMigrate(app, options)
+    vModels = (options and options.models) || modelNames
+    # if models are coming from a config file, load the file and insert into vModels array
+    vModels = loadModelsFrom(app, vModels) if isString vModels
+
+    autoMigrateDone = autoMigrate(app, options, vModels)
       .asCallback (err)->
         if err
           app.set('loopback-component-auto-migrate-error', err)

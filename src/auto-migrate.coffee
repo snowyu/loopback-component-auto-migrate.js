@@ -1,16 +1,14 @@
-Promise       = require 'bluebird'
-path          = require 'path'
-isFunction    = require 'util-ex/lib/is/type/function'
-isUndefined   = require 'util-ex/lib/is/type/undefined'
-debug         = require('debug')('loopback:component:autoMigrate:autoMigrate')
-appRoot       = require 'app-root-path'
-models        = require appRoot + '/server/model-config.json'
-modelNames    = require './model-names'
+Promise        = require 'bluebird'
+path           = require 'path'
+isFunction     = require 'util-ex/lib/is/type/function'
+isUndefined    = require 'util-ex/lib/is/type/undefined'
+debug          = require('debug')('loopback:component:autoMigrate:autoMigrate')
+appRoot        = require 'app-root-path'
+models         = require appRoot + '/server/model-config.json'
 
 # drop all tables and create all tables from models.
-module.exports = (app, options)->
+module.exports = (app, options, vModelNames)->
   vModels = []
-  vModelNames = (options and options.models) || modelNames
   Promise.map vModelNames, (model)->
     ds = app.dataSources[models[model].dataSource]
     ds.setMaxListeners(0)
