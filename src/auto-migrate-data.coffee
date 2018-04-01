@@ -1,11 +1,11 @@
-Promise     = require 'bluebird'
+Promise      = require 'bluebird'
 
-automigrate = require './auto-migrate'
-loadDataFrom= require './load-data-from'
+automigrate  = require './auto-migrate'
+loadDataFrom = require './load-data-from'
 
 # Migrate database and import data(if aDataFolder exists)
-module.exports = (aApp, aOptions) ->
-  result = automigrate(aApp, aOptions)
+module.exports = (aApp, aOptions, vModels) ->
+  result = automigrate(aApp, aOptions, vModels)
   aDataFolder = aOptions and aOptions.fixtures
   raiseError = aOptions?.raiseError
   if aDataFolder
