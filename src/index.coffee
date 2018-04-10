@@ -1,8 +1,16 @@
 'use strict'
-debug = require('debug')('loopback:component:autoMigrate:main')
+require './register-config-file-format'
+
+debug       = require('debug')('loopback:component:autoMigrate:main')
+path        = require 'path'
+isString    = require 'util-ex/lib/is/type/string'
+loadCfgSync = (require 'load-config-file').loadSync
 
 module.exports = (app, options) ->
   debug 'initializing component'
+  if app.get('loopback-component-auto-migrate-status')
+    debug 'already migrating'
+    return
   loopback = app.loopback
   loopbackMajor = loopback and loopback.version and loopback.version.split('.')[0] or 1
   if loopbackMajor < 2
@@ -13,6 +21,9 @@ module.exports = (app, options) ->
     autoMigrate = require './' + migration
     raiseError = (options and options.migration)
     app.set('loopback-component-auto-migrate-status', 'loaded')
+    vModels = (options and options.models)
+    # a config file location instead of passing all list inside 'component-config.json'
+    options.models = loadCfgSync(path.resolve(vModels)) if isString vModels
 
     autoMigrateDone = autoMigrate(app, options)
       .asCallback (err)->

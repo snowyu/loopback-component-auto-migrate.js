@@ -1,4 +1,4 @@
-require './register-config-file-format'
+# require './register-config-file-format'
 
 Promise     = require "bluebird"
 inflection  = require 'inflection'
