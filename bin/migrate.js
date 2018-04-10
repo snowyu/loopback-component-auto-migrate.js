@@ -1,7 +1,7 @@
-#!/bin/env node
+#!/usr/bin/env node
 var path        = require('path');
 var Promise     = require('bluebird');
-var appRoot     = require('app-root-path');
+var appRoot     = require('app-root-path').path;
 
 var app = require(appRoot + '/server/server');
 var autoMigrateData = require('../lib/auto-migrate-data');
@@ -11,7 +11,7 @@ var createDefaults;
 try {
   createDefaults  = require(appRoot + '/server/common/create-defaults');
 } catch(err) {
-  createDefaults  = Promise.resolve();
+  createDefaults  = Promise.resolve;
 }
 var defaultFolder   = path.resolve(appRoot, './server/data');
 
@@ -43,6 +43,10 @@ function migrate(aDataFolder, forceCreate) {
 module.exports = migrate;
 
 function main() {
+  if (app.get('loopback-component-auto-migrate-status')){
+    console.log('loopback-component-auto-migrate is already enabled in "server/model-config.json"')
+    return;
+  }
   var parseArgs = require('minimist');
   var info;
   var opts = {
