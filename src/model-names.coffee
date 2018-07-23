@@ -6,4 +6,7 @@ models      = require appRoot + '/server/model-config.json'
 datasources = require appRoot + '/server/datasources.json'
 
 module.exports = Object.keys(models).filter (model)->
-    !(isUndefined(models[model].dataSource) or isUndefined(datasources[models[model].dataSource]))
+    !(isUndefined(models[model].dataSource) or
+      isUndefined(datasources[models[model].dataSource]) or
+      (models[model].options and models[model].options.skipMigration)
+    )
