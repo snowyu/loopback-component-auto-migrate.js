@@ -70,6 +70,21 @@ autoMigrate(app, {models:['Role'], fixtures: 'yourDataFolder'}).then()
 
 ```
 
+#### Options:
+Migration can be disabled for the model if you specify `skipMigration` option in the `./server/model-config.json` file:
+```
+{
+  ...
+  "customModel": {
+      "dataSource": "datasource",
+      "public": true,
+      "options": {
+        "skipMigration": true
+      }
+  }
+  ...
+}
+```
 ## History
 
 ### v0.2.3
